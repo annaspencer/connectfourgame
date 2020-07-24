@@ -12,30 +12,25 @@ let HEIGHT = 6;
 let currPlayer = 1; // active player: 1 or 2
 let board = []; // array of rows, each row is array of cells  (board[y][x])
 
-/** makeBoard: create in-JS board structure:
- *    board = array of rows, each row is array of cells  (board[y][x])
- */
 
 function makeBoard() {
-  // TODO: set "board" to empty HEIGHT x WIDTH matrix array
-  // loops through starting at Y grid position 0-0,
+ 
+  // loops through starting at Y grid position 0-0,pushing to the board array each coordinate for x at y, 6X7
   for (let y = 0; y < HEIGHT; y++) {
-    // 
-    board.push(Array.from({length: WIDTH}));
-    
-	}
+   board.push(Array.from({length: WIDTH}));
+    }
 }
 
 
 
-/** makeHtmlBoard: make HTML table and row of column tops. */
+
 
 function makeHtmlBoard() {
-  // TODO: get "htmlBoard" variable from the item in HTML w/ID of "board"
+  //gets "htmlBoard" variable from the item in HTML w/ID of "board"
   const board = document.getElementById("board");
 
-  // TODO: add comment for this code
-  //create top row TR element
+  
+  //creates top row TR element
   const top = document.createElement("tr");
   //set id for top column(mouseover event space)
   top.setAttribute("id", "column-top");
@@ -50,26 +45,26 @@ function makeHtmlBoard() {
   // sets id grid coordinates attribute
     headCell.setAttribute("id", x);
   
-  // adds row of TD's to top of board
+  // adds row of TD's to top of 6x7 board
     top.append(headCell);
 
   }
  board.append(top);
 
-  // TODO: add comment for this code
-  //for board grid: loop through y values, 
+  
+  //for HTML board grid: loop through y values, 
   for (let y = 0; y < HEIGHT; y++) {
-  // create TR row for each x value, 
+  // create TR row for each y value, 
     const row = document.createElement("tr");
-    console.log(row)
+   
   // loop through x-values  
     for (let x = 0; x < WIDTH; x++) {
   //create TD 
       const cell = document.createElement("td");
-      console.log(cell)
+  
   // add attribute ids of x & y coordinate values,
       cell.setAttribute("id", `${y}-${x}`);
-  //add cell TD to row TR 
+  //adds TD to row TR 
       row.append(cell);
     }
     // add to board
@@ -80,8 +75,8 @@ function makeHtmlBoard() {
 /** findSpotForCol: given column x, return top empty y (null if filled) */
 
 function findSpotForCol(x) {
-  // TODO: write the real version of this, rather than always returning 0
-  // starting in the y column
+  
+  // starting in the y row
   for (let y = HEIGHT - 1; y >= 0; y--) {
   // check if the X cell in Y row has null value/is taken
     if (!board[y][x]) {
@@ -89,39 +84,39 @@ function findSpotForCol(x) {
       return y;
     }
   }
-  // or return null to that position & render the cell "taken"
+  // or return null to that position & the cell is "taken"
   return null;
 }
 
 
-/** placeInTable: update DOM to place piece into HTML table of board */
+/** updates DOM to place piece into HTML table of board */
 
 function placeInTable(y, x) {
-// TODO: make a div and insert into correct table cell
+// makes a div and insert into correct table cell
 // create element
   const div = document.createElement('div');
-// add piece to class
+// adds token div to class element div
   div.classList.add('div');
-// add player to class
+// tracks which player the token belongs to
   div.classList.add(`p${currPlayer}`);
-  // make spot
+  //styles that token in css
 div.style.top = -50 * (y + 2);
 
-// marker representation of spot taken
+// creates a variable for the div by it's xy coordinates. 
   const spot = document.getElementById(`${y}-${x}`)
   spot.append(div);
 }
 
 
 
-/** endGame: announce game end */
+/** announce game end */
 
 function endGame(msg) {
   alert(msg)
-  // TODO: pop up alert message
+  
 }
 
-/** handleClick: handle click of column top to play piece */
+/** handles click of column top to play piece */
 
 function handleClick(evt) {
   // get x from ID of clicked cell
@@ -134,7 +129,7 @@ function handleClick(evt) {
   }
 
   // place piece in board and add to HTML table
-  // TODO: add line to update in-memory board
+  // adds line to update in-memory board
   // y,x coordinates at the current player's selection
   board[y][x] = currPlayer;
   // adds selection to the board as current player
@@ -147,17 +142,17 @@ function handleClick(evt) {
   }
 
   // check for tie
-  // TODO: check if all cells in board are filled; if so call, call endGame
+  // checks if all cells in board are filled; if so call, call endGame
   if (board.every(row => row.every(cell => cell))) {
     return endGame('Tie!');
   }
   // switch players
-  // TODO: switch currPlayer 1 <-> 2
+  // switch currPlayer 1 <-> 2
   currPlayer = currPlayer === 1 ? 2 : 1;
 
 }
 
-/** checkForWin: check board cell-by-cell for "does a win start here?" */
+/** checks board cell-by-cell for "does a win start here?" */
 
 function checkForWin() {
   function _win(cells) {
@@ -175,7 +170,7 @@ function checkForWin() {
     );
   }
 
-  // TODO: read and understand this code. Add comments to help you.
+  // 
   // iterate through y axis
   for (let y = 0; y < HEIGHT; y++) {
  // while going through x axis
